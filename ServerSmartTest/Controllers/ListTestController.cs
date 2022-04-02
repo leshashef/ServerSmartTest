@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ServerSmartTest.Model;
 using ServerSmartTest.Model.Context;
+using ServerSmartTest.ViewModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,8 +41,21 @@ namespace ServerSmartTest.Controllers
 
         // POST api/<ListTestController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] SmartTestView smartTest)
         {
+            if (ModelState.IsValid)
+            {
+                var test = new SmartTests();
+                test.TestName = smartTest.NameTest;
+                test.ImgTest = smartTest.ImgTest;
+                test.UserId = smartTest.UserId;
+
+                var user = _context.Users.Find(smartTest.UserId);
+                test.User = user;
+
+                _context.SmartTests.Add(test);
+                _context.SaveChanges();
+            }
         }
 
         // PUT api/<ListTestController>/5
