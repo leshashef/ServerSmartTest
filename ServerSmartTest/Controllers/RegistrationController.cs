@@ -22,7 +22,7 @@ namespace ServerSmartTest.Controllers
 
         [HttpGet]
         public int Get()
-        {
+        {   
             return 3;
         }
 
