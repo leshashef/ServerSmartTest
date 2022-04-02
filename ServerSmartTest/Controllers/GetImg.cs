@@ -8,13 +8,13 @@ namespace ServerSmartTest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GetImgController : ControllerBase
+    public class GetImg : ControllerBase
     {
         private readonly ILogger<RegistrationController> _logger;
         private readonly IWebHostEnvironment _webhostenv;
         private readonly AppDBContext _context;
 
-        public GetImgController(ILogger<RegistrationController> logger, AppDBContext context, IWebHostEnvironment webhostenv)
+        public GetImg(ILogger<RegistrationController> logger, AppDBContext context, IWebHostEnvironment webhostenv)
         {
             _logger = logger;
             _context = context;
