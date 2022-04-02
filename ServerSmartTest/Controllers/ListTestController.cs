@@ -13,18 +13,22 @@ namespace ServerSmartTest.Controllers
     {
 
         private readonly ILogger<RegistrationController> _logger;
+        private readonly IWebHostEnvironment _webhostenv;
         private readonly AppDBContext _context;
 
-        public ListTestController(ILogger<RegistrationController> logger, AppDBContext context)
+        public ListTestController(ILogger<RegistrationController> logger, AppDBContext context, IWebHostEnvironment webhostenv)
         {
             _logger = logger;
             _context = context;
+            _webhostenv = webhostenv;   
         }
         // GET: api/<ListTestController>
         [HttpGet]
         public IEnumerable<SmartTests> Get()
         {
-            return _context.SmartTests.Include(x=>x.Users).Include(x=>x.Quests).ToList();
+        
+
+            return _context.SmartTests.Include(x=>x.User).Include(x=>x.Quests).ToList();
         }
             
         // GET api/<ListTestController>/5

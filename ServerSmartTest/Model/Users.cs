@@ -13,6 +13,5 @@
         public string? Password { get; set; }
 
         public virtual ICollection<SmartTests> SmartTests { get; set; }
-
     }
 }

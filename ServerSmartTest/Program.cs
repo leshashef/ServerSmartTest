@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
     builder =>
     {
-        builder.WithOrigins("https://localhost:8080", "https://localhost:8081").AllowCredentials().AllowAnyHeader().AllowAnyMethod(); ;
+        builder.WithOrigins("https://localhost:8080", "https://localhost:8081", "https://localhost:8082").AllowCredentials().AllowAnyHeader().AllowAnyMethod(); ;
     });
 });
 
@@ -39,7 +39,7 @@ app.UseCookiePolicy(new CookiePolicyOptions
     Secure = CookieSecurePolicy.None,
 });
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllers();
 
 app.Run();
