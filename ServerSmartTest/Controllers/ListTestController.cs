@@ -27,9 +27,16 @@ namespace ServerSmartTest.Controllers
         [HttpGet]
         public IEnumerable<SmartTests> Get()
         {
-        
-
-            return _context.SmartTests.Include(x=>x.User).Include(x=>x.Quests).ToList();
+            var Tests = _context.SmartTests.Include(x=>x.User).ToList();
+            if (Tests == null)
+            {
+                return null;
+            }
+            foreach(var test in Tests)
+            {
+                test.User.SmartTests = null;
+            }
+            return Tests;
         }
             
         // GET api/<ListTestController>/5
@@ -39,32 +46,6 @@ namespace ServerSmartTest.Controllers
             return "value";
         }
 
-        // POST api/<ListTestController>
-        [HttpPost]
-        public void Post([FromBody] SmartTestView smartTest)
-        {
-            if (ModelState.IsValid)
-            {
-                var test = new SmartTests();
-                test.TestName = smartTest.NameTest;
-                test.ImgTest = smartTest.ImgTest;
-                test.UserId = smartTest.UserId;
 
-                _context.SmartTests.Add(test);
-                _context.SaveChanges();
-            }
-        }
-
-        // PUT api/<ListTestController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ListTestController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

@@ -47,6 +47,7 @@ namespace ServerSmartTest.Controllers
                     var newQuest = new Quests();
                     newQuest.NameQuests = quest.QuestName;
                     newQuest.Jsontext = quest.json;
+                    Console.WriteLine(newQuest.Jsontext);
                     newQuest.SmartTests = test;
                     test.Quests.Add(newQuest);
                 }
