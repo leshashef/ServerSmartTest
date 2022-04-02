@@ -27,33 +27,35 @@ namespace ServerSmartTest.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody]TestCreateView testData)
-        {
-            if (ModelState.IsValid)
-            {
+        public OkResult Post([FromBody]TestCreateView testData)
+        { 
                 var test = new SmartTests();
                 test.TestName = testData.TestName;
                 test.UserId = testData.UserId;
                 test.ImgTest = testData.ImgTest;
-                
+                _context.SmartTests.Add(test);
                 foreach(var result in testData.Results)
                 {
                     var newResult = new ResultTest();
                     newResult.ResultName = result;
+                    newResult.SmartTests = test;
                     test.ResultTests.Add(newResult);
                 }
 
                 foreach(var quest in testData.Quests)
                 {
                     var newQuest = new Quests();
-                    newQuest.NameQuests = quest.Name;
-                    newQuest.Jsontext = quest.JsonText;
+                    newQuest.NameQuests = quest.QuestName;
+                    newQuest.Jsontext = quest.json;
+                    newQuest.SmartTests = test;
                     test.Quests.Add(newQuest);
                 }
 
-                _context.SmartTests.Add(test);
+                
                 _context.SaveChanges();
-            }
+            
+
+           return Ok();
         }
     }
 }
