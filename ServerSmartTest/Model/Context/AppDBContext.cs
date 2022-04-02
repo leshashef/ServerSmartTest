@@ -19,14 +19,14 @@ namespace ServerSmartTest.Model.Context
         public virtual DbSet<SmartTests> SmartTests { get; set; } = null!;
         public virtual DbSet<Users> Users { get; set; } = null!;
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Server=DESKTOP-QFHLJ6R;Initial Catalog=apphax;Integrated Security=True");
-//            }
-//        }
+        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //        {
+        //            if (!optionsBuilder.IsConfigured)
+        //            {
+        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        //                optionsBuilder.UseSqlServer("Server=DESKTOP-QFHLJ6R;Initial Catalog=apphax;Integrated Security=True");
+        //            }
+        //        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,7 +42,7 @@ namespace ServerSmartTest.Model.Context
                     .WithMany(p => p.Quests)
                     .HasForeignKey(d => d.SmartTestsId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__Quests__SmartTes__3E52440B");
+                    .HasConstraintName("FK__Quests__SmartTes__48CFD27E");
             });
 
             modelBuilder.Entity<ResultTest>(entity =>
@@ -55,12 +55,12 @@ namespace ServerSmartTest.Model.Context
                     .WithMany(p => p.ResultTests)
                     .HasForeignKey(d => d.SmartTestsId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__ResultTes__Smart__3B75D760");
+                    .HasConstraintName("FK__ResultTes__Smart__45F365D3");
             });
 
             modelBuilder.Entity<SmartTests>(entity =>
             {
-                entity.Property(e => e.ImgPath).HasColumnType("text");
+                entity.Property(e => e.ImgTest).HasColumnType("text");
 
                 entity.Property(e => e.TestName).HasMaxLength(255);
 
@@ -68,12 +68,14 @@ namespace ServerSmartTest.Model.Context
                     .WithMany(p => p.SmartTests)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__SmartTest__UserI__38996AB5");
+                    .HasConstraintName("FK__SmartTest__UserI__4316F928");
             });
 
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.Property(e => e.Email).HasMaxLength(255);
+
+                entity.Property(e => e.ImgProfile).HasColumnType("text");
 
                 entity.Property(e => e.Password).HasMaxLength(255);
 

@@ -11,7 +11,7 @@
         public int Id { get; set; }
         public string? TestName { get; set; }
         public int? UserId { get; set; }
-        public string? ImgPath { get; set; }
+        public string? ImgTest { get; set; }
 
         public virtual Users? User { get; set; }
         public virtual ICollection<Quests> Quests { get; set; }
