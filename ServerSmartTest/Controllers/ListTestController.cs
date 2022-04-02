@@ -50,9 +50,6 @@ namespace ServerSmartTest.Controllers
                 test.ImgTest = smartTest.ImgTest;
                 test.UserId = smartTest.UserId;
 
-                var user = _context.Users.Find(smartTest.UserId);
-                test.User = user;
-
                 _context.SmartTests.Add(test);
                 _context.SaveChanges();
             }
