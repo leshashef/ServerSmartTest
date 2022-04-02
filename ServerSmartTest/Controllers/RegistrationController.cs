@@ -27,9 +27,18 @@ namespace ServerSmartTest.Controllers
         }
 
         [HttpPost]
-        public UserView Post([FromBody]UserView content)
+        public void Post([FromBody]UserView content)
         {
-            return content;
+            if (ModelState.IsValid)
+            {
+                var user = new Users();
+                user.UserName = content.Name;
+                user.Email = content.Email;
+                user.Password = content.Password;
+                user.ImgProfile = content.ImgProfile;
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
         } 
 
     }
