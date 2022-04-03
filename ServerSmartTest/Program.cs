@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 using ServerSmartTest.Model.Context;
@@ -23,6 +24,11 @@ builder.Services.AddCors(options =>
         builder.WithOrigins("https://localhost:8080", "https://localhost:8081", "https://localhost:8082").AllowCredentials().AllowAnyHeader().AllowAnyMethod(); ;
     });
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/api/RedirectToRegistration");
+               });
 
 var app = builder.Build();
 
@@ -38,7 +44,8 @@ app.UseCookiePolicy(new CookiePolicyOptions
     // При включении HTTPS нужно вернуть CookieSecurePolicy.Always
     Secure = CookieSecurePolicy.None,
 });
-app.UseAuthorization();
+app.UseAuthentication();    // аутентификация
+app.UseAuthorization();     // авторизация
 app.UseStaticFiles();
 app.MapControllers();
 

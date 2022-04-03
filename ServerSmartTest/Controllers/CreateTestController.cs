@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServerSmartTest.Model;
 using ServerSmartTest.Model.Context;
 using ServerSmartTest.ViewModel;
@@ -6,7 +7,7 @@ using ServerSmartTest.ViewModel;
 
 namespace ServerSmartTest.Controllers
 {
-
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CreateTestController : ControllerBase

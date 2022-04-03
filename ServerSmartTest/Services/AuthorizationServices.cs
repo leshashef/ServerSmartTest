@@ -7,7 +7,7 @@ namespace ServerSmartTest.Services
 {
     public class AuthorizationServices
     {
-        public async Task Authenticate(string userName)
+        public async Task Authenticate(string userName, HttpContext context)
         {
    
             var claims = new List<Claim>
@@ -17,12 +17,12 @@ namespace ServerSmartTest.Services
    
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
      
-            await AuthenticationHttpContextExtensions.SignInAsync(null, CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            await AuthenticationHttpContextExtensions.SignInAsync(context, CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
-        public async Task Logout()
+        public async Task Logout(HttpContext context)
         {
-            await AuthenticationHttpContextExtensions.SignOutAsync(null, CookieAuthenticationDefaults.AuthenticationScheme);
+            await AuthenticationHttpContextExtensions.SignOutAsync(context, CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
     }

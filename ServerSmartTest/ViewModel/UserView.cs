@@ -12,8 +12,8 @@ namespace ServerSmartTest.ViewModel
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Пустое поле")]
-        public string ImgProfile { get; set; }
+        //[Required(ErrorMessage = "Пустое поле")]
+        //public string ImgProfile { get; set; }
 
         [Required(ErrorMessage = "Пустое поле")]
         [StringLength(16, MinimumLength = 6, ErrorMessage = "Неверный формат")]

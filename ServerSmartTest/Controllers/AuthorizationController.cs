@@ -8,17 +8,16 @@ namespace ServerSmartTest.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorizationController
+    public class AuthorizationController : ControllerBase
     {
         private readonly ILogger<AuthorizationController> _logger;
         private readonly AppDBContext _context;
-        private readonly AuthorizationServices _authorization;
+        private readonly AuthorizationServices _authorization = new AuthorizationServices();
 
-        public AuthorizationController(ILogger<AuthorizationController> logger, AppDBContext context, AuthorizationServices authorization)
+        public AuthorizationController(ILogger<AuthorizationController> logger, AppDBContext context)
         {
             _logger = logger;
             _context = context;
-            _authorization = authorization;
         }
 
 
@@ -29,14 +28,14 @@ namespace ServerSmartTest.Controllers
         }
 
         [HttpPost]
-        public async Task Post(AuthorizationView user)
+        public async Task<OkResult> Post(AuthorizationView user)
         {
-            var checkUser = _context.Users.FirstOrDefault(x => x.UserName == user.Name && x.Password == user.Password);
+            var checkUser = _context.Users.FirstOrDefault(x => x.Email == user.Email && x.Password == user.Password);
             if(checkUser != null) 
             {
-                await _authorization.Authenticate(user.Name);
+                await _authorization.Authenticate(user.Email,HttpContext);
             }
-
+            return Ok();
         }
     }
 }

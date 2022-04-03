@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerSmartTest.Model;
 using ServerSmartTest.Model.Context;
+using ServerSmartTest.Services;
 using ServerSmartTest.ViewModel;
 
 namespace ServerSmartTest.Controllers
@@ -12,6 +13,7 @@ namespace ServerSmartTest.Controllers
     {
         private readonly ILogger<RegistrationController> _logger;
         private readonly AppDBContext _context;
+        private readonly AuthorizationServices _authorization = new AuthorizationServices();
 
         public RegistrationController(ILogger<RegistrationController> logger, AppDBContext context)
         {
@@ -27,18 +29,21 @@ namespace ServerSmartTest.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody]UserView content)
+        public async Task<OkResult> Post([FromBody]UserView content)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new Users();
-                user.UserName = content.Name;
-                user.Email = content.Email;
-                user.Password = content.Password;
-                user.ImgProfile = content.ImgProfile;
-                _context.Users.Add(user);
-                _context.SaveChanges();
-            }
+            await _authorization.Authenticate(content.Email, HttpContext);
+            //if (ModelState.IsValid)
+            //{
+            //    var user = new Users();
+            //    user.UserName = content.Name;
+            //    user.Email = content.Email;
+            //    user.Password = content.Password;
+            //    user.ImgProfile = "defaultPhoto";
+            //    _context.Users.Add(user);
+            //    await _authorization.Authenticate(content.Email);
+            //    _context.SaveChanges();
+            //}
+            return Ok();
         } 
 
     }
